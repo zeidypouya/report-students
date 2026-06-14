@@ -1,65 +1,152 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useRouter } from "next/navigation";
+
+export default function LoginPage() {
+  const router = useRouter();
+
+  const pressDown = (e) => {
+    e.currentTarget.style.transform = "translateY(10px)";
+    e.currentTarget.style.boxShadow = `
+      0 3px 0 rgba(255,255,255,0.1),
+      0 8px 18px rgba(0,0,0,0.4),
+      inset 0 3px 8px rgba(0,0,0,0.25)
+    `;
+  };
+
+  const pressUp = (e) => {
+    e.currentTarget.style.transform = "translateY(0)";
+    e.currentTarget.style.boxShadow = `
+      0 10px 0 rgba(255,255,255,0.15),
+      0 20px 40px rgba(0,0,0,0.45),
+      inset 0 1px 0 rgba(255,255,255,0.4)
+    `;
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <>
+      <style jsx>{`
+        @keyframes fadeUp {
+          0% {
+            opacity: 0;
+            transform: translateY(35px) scale(0.96);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+      `}</style>
+
+      <main
+        style={{
+          position: "relative",
+          display: "flex",
+          minHeight: "100vh",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          overflow: "hidden",
+          backgroundColor: "#000",
+          fontFamily: "Tahoma, Arial, sans-serif",
+        }}
+      >
+        {/* ویدیو پس‌زمینه محو */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          src="/nurse-walking.mp4"
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 0,
+            width: "110%",
+            height: "110%",
+            objectFit: "cover",
+            filter: "blur(45px) brightness(0.6)",
+            transform: "scale(1.1)",
+          }}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+
+        {/* ویدیو اصلی */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          src="/nurse-walking.mp4"
+          style={{
+            position: "relative",
+            zIndex: 1,
+            maxHeight: "100vh",
+            width: "auto",
+          }}
+        />
+
+        {/* متن و دکمه */}
+        <div
+          style={{
+            position: "absolute",
+            zIndex: 20,
+            bottom: "10%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "18px",
+            width: "100%",
+            opacity: 0,
+            animation: "fadeUp 1.2s ease-out forwards",
+            animationDelay: "0.4s",
+          }}
+        >
+          <h1
+            style={{
+              color: "#0a1d4a",
+              fontSize: "26px",
+              fontWeight: "900",
+              textAlign: "center",
+              textShadow:
+                "0 0 10px rgba(255,255,255,0.4), 0 0 2px rgba(255,255,255,0.7)",
+              margin: 0,
+              direction: "rtl",
+            }}
+          >
+            سامانه مشاهده نتایج کارآموزی
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+          <button
+            onClick={() => router.push("/login")}
+            onMouseDown={pressDown}
+            onMouseUp={pressUp}
+            onMouseLeave={pressUp}
+            style={{
+              padding: "16px 65px",
+              fontSize: "20px",
+              fontWeight: "900",
+              color: "#0a1d4a",
+              textTransform: "uppercase",
+              letterSpacing: "2px",
+              cursor: "pointer",
+              border: "1.5px solid rgba(255,255,255,0.5)",
+              borderRadius: "18px",
+              background: "rgba(255,255,255,0.25)",
+              backdropFilter: "blur(15px)",
+              WebkitBackdropFilter: "blur(15px)",
+              boxShadow: `
+                0 10px 0 rgba(255,255,255,0.15),
+                0 20px 40px rgba(0,0,0,0.45),
+                inset 0 1px 0 rgba(255,255,255,0.4)
+              `,
+              transition: "all 0.12s ease",
+              outline: "none",
+            }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            LOGIN
+          </button>
         </div>
       </main>
-    </div>
+    </>
   );
 }
